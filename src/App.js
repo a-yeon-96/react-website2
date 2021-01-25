@@ -1,25 +1,52 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Board from './board';
+// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Boardcreate from './boardcreate';
+// import Boardread from './boardread';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+  maxno = 3
+    state = {
+      
+        boards: [
+          
+            {
+                no: 1,
+                writer: 'aaa',
+                title: '게시판리스트',
+                date: new Date(2021, 0, 4)
+            },
+            {
+                no: 2,
+                writer: 'bbb',
+                title: '월요일',
+                date: new Date(2021, 0, 4)
+            }
+        ]
+    }
+
+    Create = (data) => {
+        const { boards } = this.state;
+        this.setState({
+          maxno: this.state.maxno+1,
+          boards: boards.concat({no: this.maxno++, date: new Date(),...data})
+        })
+        console.log(data);
+    }
+
+  render() {
+    return (
+      <div>
+      <div>
+        <Boardcreate onCreate={this.Create} />  
+      </div>
+      <div>
+         <Board data={this.state.boards} />
+      </div>
+      </div>
+    );
+  }
 }
-
 export default App;
